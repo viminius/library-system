@@ -2,11 +2,17 @@ package com.pessoal.library.entities;
 
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Table(name = "book")
+@Entity(name = "book")
 public class Book {
-
-	@Id
+ 
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
 	private String author;
@@ -17,7 +23,6 @@ public class Book {
 	}
 	
 	public Book(Long id, String title, String author, String genre, Boolean available) {
-		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;

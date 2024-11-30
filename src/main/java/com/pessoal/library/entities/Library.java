@@ -2,11 +2,17 @@ package com.pessoal.library.entities;
 
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Table(name = "library")
+@Entity(name = "library")
 public class Library {
 
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String address;
@@ -15,7 +21,6 @@ public class Library {
 	}
 	
 	public Library(Long id, String name, String address) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;

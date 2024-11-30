@@ -5,11 +5,17 @@ import java.util.Objects;
 
 import com.pessoal.library.enums.LoanStatus;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Table(name = "loan")
+@Entity(name = "loan")
 public class Loan {
 
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDate loanDate;
 	private LocalDate returnDate;
@@ -19,7 +25,6 @@ public class Loan {
 	}
 	
 	public Loan(Long id, LocalDate loanDate, LocalDate returnDate, LoanStatus status) {
-		super();
 		this.id = id;
 		this.loanDate = loanDate;
 		this.returnDate = returnDate;
