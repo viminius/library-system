@@ -39,7 +39,6 @@ public class UserService {
 		user.setName(userData.getName());
         user.setEmail(userData.getEmail());
         user.setType(userData.getType());
-		
         return userRepository.save(user);
 	}
 }
