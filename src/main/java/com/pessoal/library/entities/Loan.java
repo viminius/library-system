@@ -3,6 +3,7 @@ package com.pessoal.library.entities;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pessoal.library.enums.LoanStatus;
 
 import jakarta.persistence.Entity;
@@ -17,7 +18,9 @@ public class Loan {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate loanDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate returnDate;
 	private LoanStatus status;
 	
