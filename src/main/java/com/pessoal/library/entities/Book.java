@@ -1,27 +1,36 @@
 package com.pessoal.library.entities;
 
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Table(name = "book")
 @Entity(name = "book")
 public class Book {
- 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
 	private String author;
 	private String genre;
 	public Boolean available;
-	
+	@OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+	@JsonBackReference
+	private List<Loan> loans;
+
 	public Book() {
 	}
-	
+
 	public Book(Long id, String title, String author, String genre, Boolean available) {
 		this.id = id;
 		this.title = title;
@@ -70,6 +79,14 @@ public class Book {
 		this.available = available;
 	}
 
+	public List<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -87,5 +104,4 @@ public class Book {
 		return Objects.equals(id, other.id);
 	}
 
-	
 }

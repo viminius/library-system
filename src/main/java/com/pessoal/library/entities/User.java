@@ -1,13 +1,17 @@
 package com.pessoal.library.entities;
 
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pessoal.library.enums.UserType;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Table(name = "user")
@@ -19,6 +23,10 @@ public class User {
 	private String name;
 	private String email;
 	private UserType type;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@JsonBackReference
+	private List<Loan> loans;
 	
 	public User() {
 	}
@@ -62,6 +70,14 @@ public class User {
 		this.type = type;
 	}
 
+	public List<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
