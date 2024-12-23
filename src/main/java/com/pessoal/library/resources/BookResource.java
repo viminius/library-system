@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pessoal.library.entities.Book;
+import com.pessoal.library.entities.DTO.BookDTO;
 import com.pessoal.library.services.BookService;
 
 @RestController
@@ -36,9 +37,25 @@ public class BookResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Book> insert(@RequestBody Book obj) {
-		Book savedBook = bookService.insert(obj);
-		return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
+	public ResponseEntity<BookDTO> insert(@RequestBody BookDTO bookDTO) {
+		Book book = new Book();
+		book.setTitle(bookDTO.getTitle());
+		book.setAuthor(bookDTO.getAuthor());
+		book.setGenre(bookDTO.getGenre());
+		book.setAvailable(bookDTO.getAvailable());
+		
+		Book savedBook = bookService.insert(book);
+		
+		BookDTO responseDTO = new BookDTO(
+			savedBook.getId(),
+			savedBook.getTitle(),
+			savedBook.getAuthor(),
+			savedBook.getGenre(),
+			savedBook.getAvailable()
+		);
+				
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
 	}	
 	
 	@DeleteMapping(value = "/{id}")

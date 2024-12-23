@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pessoal.library.entities.User;
+import com.pessoal.library.entities.DTO.UserDTO;
 import com.pessoal.library.services.UserService;
 
 @RestController
@@ -37,9 +38,22 @@ public class UserResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody User obj) {
-		User savedUser = userService.insert(obj);
-		return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+	public ResponseEntity<UserDTO> insert(@RequestBody UserDTO userDTO) {
+		User user = new User();
+		user.setName(userDTO.getName());
+		user.setEmail(userDTO.getEmail());
+		user.setType(userDTO.getType());
+		
+		User savedUser = userService.insert(user);
+		
+		UserDTO responseDTO = new UserDTO(
+			savedUser.getId(),
+			savedUser.getName(),
+			savedUser.getEmail(),
+			savedUser.getType()
+		);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
 	}
 	
 	@DeleteMapping(value = "/{id}")
